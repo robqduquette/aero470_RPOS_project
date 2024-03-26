@@ -31,10 +31,11 @@ assert("w" == logsout{indx.cross_v}.Name)
 %% Plots
 close all
 figure(1)
-plot(radial_p, along_p)
+plot3(radial_p, along_p, cross_p)
 
-
-
+xlabel('radial')
+ylabel('along track')
+plotTarget([0 8 0],'sr')
 
 
 

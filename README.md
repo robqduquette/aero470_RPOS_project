@@ -7,3 +7,6 @@
 
     test - contains test files
 
+# Running the simulation
+
+   run the simulation while in the src folder

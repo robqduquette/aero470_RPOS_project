@@ -5,12 +5,12 @@
 logsout = out.logsout;
 
 % indices
-indx.radial_p = 4;
-indx.radial_v = 1;
-indx.along_p = 5;
-indx.along_v = 2;
-indx.cross_p = 6;
-indx.cross_v = 3;
+indx.radial_p = 5;
+indx.radial_v = 2;
+indx.along_p = 6;
+indx.along_v = 3;
+indx.cross_p = 7;
+indx.cross_v = 4;
 
 % check
 radial_p = logsout{indx.radial_p}.Values.Data;
@@ -30,13 +30,35 @@ assert("w" == logsout{indx.cross_v}.Name)
 
 %% Plots
 close all
-figure(1)
-plot3(radial_p, along_p, cross_p)
+if(0)
+    figure(1)
+    plot3(radial_p, along_p, cross_p,'b')
+    hold on
+    plot3(pos_init(1),pos_init(2),pos_init(3),'-sb');
+    xlabel('radial')
+    ylabel('along track')
+    plotTarget([0 8e3 0],'sr')
+    grid on
+    axis equal
+end
 
-xlabel('radial')
-ylabel('along track')
-plotTarget([0 8 0],'sr')
+if(1)
+    figure(2)
+    plotTarget([-8e3,0,0],'sr');
+    hold on
+    comet(-along_p, radial_p)
+    grid on
+    axis equal
+end
 
-
-
-
+% [radial_p(end-10:end),out.tout(end-10:end)]z=
+% 
+% transfer_ref.x = radial_p;
+% transfer_ref.y = along_p;
+% transfer_ref.z = cross_p;
+% transfer_ref.u = radial_v;
+% transfer_ref.v = along_v;
+% transfer_ref.w = cross_v;
+% transfer_ref.t = out.tout;
+% 
+% %save 'transfer_ref' transfer_ref

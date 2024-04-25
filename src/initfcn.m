@@ -28,3 +28,23 @@ A(4,5) = 2*n;
 B = [zeros(3,3);eye(3)/m];
 C = eye(6);
 D = zeros(6,3);
+
+
+sys = ss(A,B,C,D);
+
+tfux = ss2tf(A,B,C,D,1);
+tfuy = ss2tf(A,B,C,D,2);
+tfuz = ss2tf(A,B,C,D,3);
+
+for i = 1:size(B, 2) % Loop over each input
+    [num, den] = ss2tf(A, B, C, D, i);
+    % Loop over each output
+    for j = 1:size(C, 1) % Assuming output size matches C's row count
+        % Store each transfer function in the cell array
+        H{i, j} = tf(num(j, :), den);
+        % H{i,j}
+    end
+end
+H
+% where H{input, output}
+

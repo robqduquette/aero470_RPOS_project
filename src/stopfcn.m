@@ -5,12 +5,12 @@
 logsout = out.logsout;
 
 % indices
-indx.radial_p = 5;
-indx.radial_v = 2;
-indx.along_p = 6;
-indx.along_v = 3;
-indx.cross_p = 7;
-indx.cross_v = 4;
+indx.radial_p = 4;
+indx.radial_v = 1;
+indx.along_p = 5;
+indx.along_v = 2;
+indx.cross_p = 6;
+indx.cross_v = 3;
 
 % check
 radial_p = logsout{indx.radial_p}.Values.Data;

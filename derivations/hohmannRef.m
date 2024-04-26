@@ -11,7 +11,7 @@ r1 = r_earth + 530e3;
 r2 = r_earth + 500e3;
 delta_r = r2-r1;
 
-%% evlliptical transfer
+%% elliptical transfer
 a = r1 + delta_r/2;
 e = 1 - r2/a; % eccentricity
 n = sqrt(mu/a^3); % mean motion

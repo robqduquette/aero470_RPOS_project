@@ -34,6 +34,7 @@ end
 % where H{input, output} is the tf of input to output
 
 %% look at bode plot
+makeplots = false;
 showtf = true;
 verbose = false;
 save_figs = false;
@@ -47,32 +48,33 @@ skip = [1, 3;
         3, 2;
         3, 4;
         3, 5];
-
-for i = 1:3
-    for j = 1:6
-        if any(sum((skip == [i,j])')==2) % if is in skip list
-            if verbose 
-                disp(['Skipping (',num2str([i,j]),')' ])
+if makeplots
+    for i = 1:3
+        for j = 1:6
+            if any(sum((skip == [i,j])')==2) % if is in skip list
+                if verbose 
+                    disp(['Skipping (',num2str([i,j]),')' ])
+                end
+                continue
             end
-            continue
-        end
-        in = i;
-        out = j;
-        f = figure;
-        tf = H{in,out};
-        poles = roots(tf.Denominator{1});
-        zeros = roots(tf.Numerator{1});
-        bode(tf)
-        title({'Bode Plot',['input = ',num2str(in),', output = ',num2str(out)]})
-        grid on
-        if showtf
-            annotation('textbox',[0.7 0.68 0.2 0.2],'String',{'Poles:',num2str(poles')},'EdgeColor','None','FontName','Consolas','HorizontalAlignment','right')
-            annotation('textbox',[0.16 0.68 0.2 0.2],'String',{'Zeros:',num2str(zeros')},'EdgeColor','None','FontName','Consolas','HorizontalAlignment','left')
-        end
-        % save figures
-        if save_figs
-            name = ['bode_',num2str(i),'_',num2str(j)];
-            print(name, '-dpng')
+            in = i;
+            out = j;
+            f = figure;
+            tf = H{in,out};
+            poles = roots(tf.Denominator{1});
+            zeros = roots(tf.Numerator{1});
+            bode(tf)
+            title({'Bode Plot',['input = ',num2str(in),', output = ',num2str(out)]})
+            grid on
+            if showtf
+                annotation('textbox',[0.7 0.68 0.2 0.2],'String',{'Poles:',num2str(poles')},'EdgeColor','None','FontName','Consolas','HorizontalAlignment','right')
+                annotation('textbox',[0.16 0.68 0.2 0.2],'String',{'Zeros:',num2str(zeros')},'EdgeColor','None','FontName','Consolas','HorizontalAlignment','left')
+            end
+            % save figures
+            if save_figs
+                name = ['bode_',num2str(i),'_',num2str(j)];
+                print(name, '-dpng')
+            end
         end
     end
 end
@@ -86,3 +88,13 @@ end
 % bode(tf_ex)
 % title('exact')
 
+%%
+figure
+nyquist(H_ex{1,1},'-r')
+grid on
+xlim([-10,10])
+ylim([-2,2])
+
+%%
+figure 
+pzmap(H_ex{1,1})

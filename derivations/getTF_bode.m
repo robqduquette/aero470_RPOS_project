@@ -19,7 +19,7 @@ C = eye(6);
 D = zeros(6,3);
 
 %% get transfer functions
-tol = 1e-500; % what tolerance to cutoff
+tol = 1e-500; % what tolerance to cutoff - tolerance is very small bc 1e-56 terms are important
 for i = 1:size(B, 2) % Loop over each input
     [num_ex, den_ex] = ss2tf(A, B, C, D, i);
     num = (abs(num_ex)>tol).*num_ex;

@@ -4,12 +4,20 @@ load sysoltf.mat
 %% nyqist
 % choose transfer function
 in = 2;
-out = 2;
+out= 2;
 radius = 1e-1; % set to 0 if no radius desired
 boxneg1 = false;
 
-controltf = tf([1],[1]);
-tf = H_ex{in,out} * controltf;
+% experimenting with spring mass damper system 
+% smd.wn = 1;
+% smd.damp = 0.01;
+% smd.tf = tf([smd.wn^2],[1 2*smd.damp*smd.wn smd.wn^2])
+n = 0.00110851126424986; %2*pi/(60); % Hz
+m = 100; % kgla
+
+planttf = H_ex{in,out};
+controltf = tf([300 100 0],[1 0]);
+tf = planttf * controltf
 
 % get poles and zeros
 zeros = roots(tf.Numerator{1})
@@ -29,7 +37,7 @@ if (radius ~= 0) % make the round part
     theta = linspace(0,pi/2);
     w_circ = radius*(cos(theta) + i*sin(theta));
 end
-w_vert = logspace(log10(radius),20,1000)*1i;
+w_vert = logspace(log10(radius),log10(radius)+3,1000)*1i;
 
 w = [w_circ, w_vert];
 

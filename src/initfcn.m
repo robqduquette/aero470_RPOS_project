@@ -1,12 +1,14 @@
 clear
 %close all
 
+LQR_ON = true;
+
 %% Initial Conditions
 % x - radial
 % y - along track
 % z - cross track
-pos_init = [30e3,70720,0]; % x, y, z
-vel_init = [0,-58.2,0];
+pos_init = [30e3, 70720, 0]; % x, y, z
+vel_init = [0, -65, 0];%[0,-58.2,0];
 
 
 %% system parameters
@@ -32,6 +34,14 @@ D = zeros(6,3);
 
 sys = ss(A,B,C,D);
 
+%% LQR
+Q = eye(6);
+R = eye(3);
+
+[KLQR, S, P] = lqr(A,B,Q,R);
+
+%% transfer fxns
+
 tfux = ss2tf(A,B,C,D,1);
 tfuy = ss2tf(A,B,C,D,2);
 tfuz = ss2tf(A,B,C,D,3);
@@ -45,6 +55,6 @@ for i = 1:size(B, 2) % Loop over each input
         % H{i,j}
     end
 end
-H
+H;
 % where H{input, output}
 

@@ -35,8 +35,8 @@ D = zeros(6,3);
 sys = ss(A,B,C,D);
 
 %% LQR
-Q = eye(6);
-R = eye(3);
+Q = diag([1,1,1,1,1,1]);
+R = diag([1,1,1]);
 
 [KLQR, S, P] = lqr(A,B,Q,R);
 

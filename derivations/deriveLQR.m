@@ -54,7 +54,7 @@ KLQR
 %% evaluate
 % system requirements:
 max_rise_time = 30; % s
-max_os = 50e-2; % overshoot percent
+max_os = 0.5; % overshoot percent
 max_settle_time = 2*pi/n * 0.01 % s
 
 plotPoleLims(max_rise_time, max_settle_time, max_os, P, []);

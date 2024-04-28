@@ -1,11 +1,13 @@
 %% get data
 logsout = out.logsout;
 
-indx.u_LQR = 1;
-indx.u_PID = 2;
-indx.ref = 3;
-indx.y = 4;
-indx.u = 5;
+indx.disturb = 1;
+indx.u_LQR = 2;
+indx.u_PID = 3;
+indx.ref = 4;
+indx.y = 5;
+indx.u_des = 6;
+indx.u = 7;
 
 % check
 output = logsout{indx.y}.Values.Data; % x y z u v w

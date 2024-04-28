@@ -6,32 +6,37 @@ function [] = plotPoleLims(tr, ts, os, p, z)
     % reqs -> dominant pole locations
     rise_rad = 2/tr; % dominant poles must be outside this circle
     settle_lim = -4/ts; % dominant poles must be left of re = settle_lim
-    damp_slope = 5/(3*(os-1));
+    damp_slope = (os ~= 1)*5/(3*(os*(os ~= 1)-1));
     theta = linspace(0,2*pi,360);
     
     % polygon vertices
-    bound_points = [settle_lim-1, damp_slope*(settle_lim-1);
-                    settle_lim, damp_slope*settle_lim;
-                    settle_lim, -damp_slope*settle_lim;
-                    settle_lim-1, -damp_slope*(settle_lim-1)];
+    ospoints = [settle_lim-100, damp_slope*(settle_lim-100);
+                    0,0;
+                    settle_lim-100, -damp_slope*(settle_lim-100)];
+
+    tspoints = [settle_lim, -1e10;
+                settle_lim, 1e10]
     
-    bad_points = [1, - damp_slope*(settle_lim-1);
-                       1, damp_slope*(settle_lim-1);
-                       bound_points];
+    bad_os_points = [100, - damp_slope*(settle_lim-100);
+                       100, damp_slope*(settle_lim-100);
+                       ospoints];
+
+    bad_ts_points = [1, -1e10;   
+                     tspoints;
+                     1, 1e10;];
     
     % good_points = [-4, -damp_slope*(settle_lim-1);
     %                  -4,  damp_slope*(settle_lim-1);
     %                  bound_points];
     
     %% plot poles, zeros, requirements
-    figure
-    % requirements
-    %fill(good_points(:,1), good_points(:,2),'green','FaceAlpha',0.1,'EdgeAlpha',0);
+    figure  
+    fill(rise_rad*sin(theta), rise_rad*cos(theta),'red','FaceAlpha',0.1,'EdgeAlpha',0.5,'EdgeColor','red');   
     hold on
-    fill(bad_points(:,1), bad_points(:,2),'red','FaceAlpha',0.1,'EdgeAlpha',0.5,'EdgeColor','red');
-    hold on
-    fill(rise_rad*sin(theta), rise_rad*cos(theta),'red','FaceAlpha',0.1,'EdgeAlpha',0.5,'EdgeColor','red');
-    plot([0,0],[damp_slope*(settle_lim-1),-damp_slope*(settle_lim-1)],'-k')
+    fill(bad_os_points(:,1), bad_os_points(:,2),'red','FaceAlpha',0.1,'EdgeAlpha',0.5,'EdgeColor','red');
+    fill(bad_ts_points(:,1), bad_ts_points(:,2),'red','FaceAlpha',0.1,'EdgeAlpha',0.5,'EdgeColor','red');
+    plot([0,0],[1e10,-1e10],'-k') % im axis
+    plot([-1e10,1e10],[0,0],'-k') % re axis
     % poles and zeros
     scatter(real(p),imag(p), 'rx')
     scatter(real(z),imag(z), 'bo')
@@ -44,7 +49,10 @@ function [] = plotPoleLims(tr, ts, os, p, z)
     legend('Invalid','','',['Poles (',num2str(length(p)),')'],['Zeros (',num2str(length(z)),')'],'Location','northeast')
     
     % min and max bounds
-    poi = [p(:); z(:); 0; bound_points(2:3,1)+bound_points(2:3,2)*1i];
+    poi = [p(:); z(:); 0]; % bound_points(2:3,1)+bound_points(2:3,2)*1i
+    if (length(poi) < 2)
+        poi = [poi; ; -1+1i; 1-1i];
+    end
     minx = min(real(poi));
     maxx = max(real(poi));
     rangex = maxx - minx;
@@ -54,5 +62,4 @@ function [] = plotPoleLims(tr, ts, os, p, z)
     margin = 0.5;
     xlim([minx-margin*rangex,maxx+margin*rangex])
     ylim([miny-margin*rangey, maxy+margin*rangey])
-
-end
+end 

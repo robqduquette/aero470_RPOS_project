@@ -14,6 +14,7 @@ vel_init = [0, -65, 0];%[0,-58.2,0];
 %% system parameters
 n = 0.00110851126424986; %2*pi/(60); % Hz
 m = 100; % kg
+max_thrust = 25; %N
 
 %% simulation settings
 time_step_max = (1 * pi/180)/n;
@@ -35,8 +36,12 @@ D = zeros(6,3);
 sys = ss(A,B,C,D);
 
 %% LQR
-Q = diag([1,1,1,1,1,1]);
-R = diag([1,1,1]);
+speed = [1,1,1,1,1,1];
+effort = [1,1,1];
+spdpriority = 0.6;
+
+Q = diag(speed./norm(speed) * spdpriority);
+R = diag(effort./norm(effort) * (1-spdpriority));
 
 [KLQR, S, P] = lqr(A,B,Q,R);
 

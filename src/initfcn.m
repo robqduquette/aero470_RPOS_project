@@ -1,14 +1,14 @@
 clear
 %close all
 
-LQR_ON = true;
+LQR_ON = false;
 
 %% Initial Conditions
 % x - radial
 % y - along track
 % z - cross track
-pos_init = [30e3, 70720, 0]; % x, y, z
-vel_init = [0, -65, 0];%[0,-58.2,0];
+pos_init = [29983, 70724, 0]; % x, y, z
+vel_init = [0, -60, 0];%[0,-58.2,0];
 
 
 %% system parameters

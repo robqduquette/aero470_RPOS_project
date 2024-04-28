@@ -4,10 +4,12 @@ logsout = out.logsout;
 indx.disturb = 1;
 indx.u_LQR = 2;
 indx.u_PID = 3;
-indx.ref = 4;
-indx.y = 5;
-indx.u_des = 6;
-indx.u = 7;
+indx.ref = 6;
+indx.y = 7;
+indx.u_des = 8;
+indx.u = 9;
+indx.F_pid_vel = 5;
+indx.F_pid_pos = 4;
 
 % check
 output = logsout{indx.y}.Values.Data; % x y z u v w
@@ -57,12 +59,13 @@ if(1)
     figure(2)
     plotTarget([-8e3,0,0],'sr');
     hold on
-    plot(-along_p, radial_p)
+    plot(-ref(:,2),ref(:,1),'--b')
     grid on
     axis equal
     xlabel('-Along Track (m)')
-
-    ylabel('Radial (m)')
+    ylabel('Radial (m)')    
+    
+    comet(-along_p, radial_p)
 end
 
 %% error plot

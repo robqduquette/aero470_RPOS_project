@@ -1,5 +1,5 @@
 clear
-%close all
+close all
 
 %% Initial Conditions
 % x - radial
@@ -32,8 +32,12 @@ D = zeros(6,3);
 sys = ss(A,B,C,D);
 
 %% LQR
-Q = eye(6);
-R = eye(3);
+speed = [1,1,1,1,1,1];
+effort = [1,1,1];
+spdpriority = 0.6;
+
+Q = diag(speed./norm(speed) * spdpriority);
+R = diag(effort./norm(effort) * (1-spdpriority));
 
 [KLQR, S, P] = lqr(A,B,Q,R);
 KLQR
@@ -45,4 +49,13 @@ KLQR
 %             +---------------------+                       
 %                                     
 %     where r is 6x1, e is 6x1, u is 3x1, y is 6x1                                
-%                                     
+%                                   
+
+%% evaluate
+% system requirements:
+max_rise_time = 30; % s
+max_os = 50e-2; % overshoot percent
+max_settle_time = 2*pi/n * 0.01 % s
+
+plotPoleLims(max_rise_time, max_settle_time, max_os, P, []);
+title('LQR Pole Locations')

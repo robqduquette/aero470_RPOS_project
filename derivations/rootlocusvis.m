@@ -26,46 +26,7 @@ poles = roots(G_OL.Denominator{1})
 num = G_OL.Numerator{1};
 den = G_OL.Denominator{1};
 
-%% reqs -> dominant pole locations
-rise_rad = 2/max_rise_time; % dominant poles must be outside this circle
-settle_lim = -4/max_settle_time; % dominant poles must be left of re = settle_lim
-damp_slope = 5/(3*(max_os-1));
-theta = linspace(0,2*pi,360);
-
-% polygon vertices
-bound_points = [settle_lim-1, damp_slope*(settle_lim-1);
-                settle_lim, damp_slope*settle_lim;
-                settle_lim, -damp_slope*settle_lim;
-                settle_lim-1, -damp_slope*(settle_lim-1)];
-
-bad_points = [1, - damp_slope*(settle_lim-1);
-                   1, damp_slope*(settle_lim-1);
-                   bound_points];
-
-good_points = [-4, -damp_slope*(settle_lim-1);
-                 -4,  damp_slope*(settle_lim-1);
-                 bound_points];
-
-%% plot poles, zeros, requirements
-figure
-% requirements
-%fill(good_points(:,1), good_points(:,2),'green','FaceAlpha',0.1,'EdgeAlpha',0);
-hold on
-%fill(rise_rad*sin(theta), rise_rad*cos(theta),'white','FaceAlpha',1,'EdgeAlpha',0); % cover up green in circle
-fill(bad_points(:,1), bad_points(:,2),'red','FaceAlpha',0.1,'EdgeAlpha',0.5,'EdgeColor','red');
-hold on
-fill(rise_rad*sin(theta), rise_rad*cos(theta),'red','FaceAlpha',0.1,'EdgeAlpha',0.5,'EdgeColor','red');
-plot([0,0],[damp_slope*(settle_lim-1),-damp_slope*(settle_lim-1)],'-k')
-% poles and zeros
-scatter(real(poles),imag(poles), 'rx')
-scatter(real(zeros),imag(zeros), 'bo')
-grid on
-xlabel('Real Axis')
-ylabel('Imaginary Axis')
-title(['Poles and Zeros of OL tf (in,out) = (',num2str(in),', ',num2str(out),')'])
-
-
-legend('Bad','','','Poles','Zeros','Location','northeast')
+plotPoleLims(max_rise_time, max_settle_time, max_os, poles, zeros)
 
 figure
 rlocus(G_OL)

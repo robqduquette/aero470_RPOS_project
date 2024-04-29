@@ -6,7 +6,7 @@ function [] = plotPoleLims(tr, ts, os, p, z)
     % reqs -> dominant pole locations
     rise_rad = 2/tr; % dominant poles must be outside this circle
     settle_lim = -4/ts; % dominant poles must be left of re = settle_lim
-    damp_slope = (os ~= 1)*5/(3*(os*(os ~= 1)-1));
+    damp_slope = (os ~= 1)*5/(3*(os*(os ~= 1)-1)); 
     theta = linspace(0,2*pi,360);
     
     % polygon vertices
@@ -15,7 +15,7 @@ function [] = plotPoleLims(tr, ts, os, p, z)
                     settle_lim-100, -damp_slope*(settle_lim-100)];
 
     tspoints = [settle_lim, -1e10;
-                settle_lim, 1e10]
+                settle_lim, 1e10];
     
     bad_os_points = [100, - damp_slope*(settle_lim-100);
                        100, damp_slope*(settle_lim-100);
@@ -46,7 +46,7 @@ function [] = plotPoleLims(tr, ts, os, p, z)
     title(['Valid Pole Locations'])
     
     
-    legend('Invalid','','',['Poles (',num2str(length(p)),')'],['Zeros (',num2str(length(z)),')'],'Location','northeast')
+    legend('Invalid','','','','',['Poles (',num2str(length(p)),')'],['Zeros (',num2str(length(z)),')'],'Location','northeast')
     
     % min and max bounds
     poi = [p(:); z(:); 0]; % bound_points(2:3,1)+bound_points(2:3,2)*1i

@@ -2,11 +2,12 @@ clear
 %close all
 
 LQR_ON = true;
+
 %% Initial Conditions
 % x - radial
 % y - along track
 % z - cross track
-pos_init = [29983, 70724, 0]; % x, y, z
+pos_init = [29983, 70724, 10]; % x, y, z
 vel_init = [0, -60, 0];%[0,-58.2,0];
 
 

@@ -55,17 +55,24 @@ if(0)
 end
 
 %% orbit plane plot
-if(0)
+if(1)
     figure(2)
-    plotTarget([-8e3,0,0],'sr');
+    plotTarget([-8,0,0],'sr');
     hold on
-    plot(-ref(:,2),ref(:,1),'--b')
+    plot(-ref(:,2)/1e3,ref(:,1)/1e3,'--b')
     grid on
-    axis equal
-    xlabel('-Along Track (m)')
-    ylabel('Radial (m)')    
+    % axis equal
+    xlabel('-Along Track (km)')
+    ylabel('Radial (km)')    
     
-    plot(-along_p, radial_p)
+    title('Chaser Reference Trajectory')
+    text(-70, 33,'Initial Position')
+    plot(-along_p(1), radial_p(1),'xr')
+    xlim([-75,10])
+    ylim([-0.3e1, 3.5e1])
+    legend('1km ahead target position','Reference Trajectory', '',...
+        Location='best')
+    %plot(-along_p, radial_p)
 end
 
 %% error plot
@@ -123,7 +130,7 @@ if(0)
 end
 
 %% 1st transfer
-if (1)
+if (0)
     first = time < 1000;
         error = ref - output;
     % pos

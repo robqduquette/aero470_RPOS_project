@@ -1,5 +1,7 @@
 clear
-clc
+close all
+
+%% Create the plots of the LQR controller system
 
 n = 0.00110851126424986; %2*pi/(60); % Hz
 m = 100; % kg
@@ -38,10 +40,25 @@ Dc = D;
 sys_cl  = ss(Ac, Bc, Cc, Dc);
 
 % Convert state-space model to transfer function
-sys_tf = tf(sys_cl);
+GCL = tf(sys_cl);
 
 % Display the transfer function
 % disp('Transfer Function of the Closed-Loop System with LQR Controller:');
 % sys_tf
 
-bode(sys_tf)
+% display all bode plots on one plot
+%bode(sys_tf) 
+
+% individual bode plots
+for in = 1
+    for out = 1
+        % make plot
+        figure
+        bode(GCL(out,in))
+        grid on
+        fig_title = ['Bode plot for input = ' ]
+        
+    end
+end
+
+

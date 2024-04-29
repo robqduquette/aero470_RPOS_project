@@ -55,7 +55,7 @@ if(0)
 end
 
 %% orbit plane plot
-if(1)
+if(0)
     figure(2)
     plotTarget([-8e3,0,0],'sr');
     hold on
@@ -65,11 +65,11 @@ if(1)
     xlabel('-Along Track (m)')
     ylabel('Radial (m)')    
     
-    comet(-along_p, radial_p)
+    plot(-along_p, radial_p)
 end
 
 %% error plot
-if(1)
+if(0)
     error = ref - output;
     % pos
     figure(3)
@@ -101,8 +101,49 @@ if(1)
     grid on
 end
 
+%% x plot
+if(0)
+    figure(6)
+    plot(time, radial_p,'-r')
+    hold on
+    plot(time, ref(:,1),'--b')
+    xlabel('time')
+    ylabel('radial position (m)')
+    title('x position')
+end
+%% y plot
+if(0)
+    figure
+    plot(time, along_p,'-r')
+    hold on
+    plot(time, ref(:,2),'--b')
+    xlabel('time')
+    ylabel('along track position (m)')
+    title('y position')
+end
 
+%% 1st transfer
+if (1)
+    first = time < 1000;
+        error = ref - output;
+    % pos
+    figure(3)
+    plot(time(first),error(first,1:3));
+    legend('ex','ey','ez')
+    ylabel('error (m)')
+    xlabel('time (s)')
+    title('Position Error for 1st maneuver')
+    grid on
 
+    % vel
+    figure(4)
+    plot(time(first),error(first,4:6));
+    legend('eu','ev','ew')
+    ylabel('error (m/s)')
+    xlabel('time (s)')
+    title('Velocity Error for 1st maneuver')
+    grid on
+end
 % [radial_p(end-10:end),out.tout(end-10:end)]z=
 % 
 % transfer_ref.x = radial_p;

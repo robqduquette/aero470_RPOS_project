@@ -1,8 +1,7 @@
 clear
 %close all
 
-LQR_ON = false;
-
+LQR_ON = true;
 %% Initial Conditions
 % x - radial
 % y - along track

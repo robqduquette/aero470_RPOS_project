@@ -2,6 +2,7 @@ clear
 %close all
 
 LQR_ON = true;
+disturbance_gain = 1;
 
 %% Initial Conditions
 % x - radial
@@ -62,4 +63,17 @@ for i = 1:size(B, 2) % Loop over each input
 end
 H;
 % where H{input, output}
+
+%% Spacecraft attitude model
+Ix = 1000;
+Iy = 1000;
+Iz = 1000;
+
+A_att = zeros(6,6);
+A_att(1:3,4:6) = eye(3);
+B_att = [zeros(3,3);diag([1/Ix, 1/Iy, 1/Iz])];
+C_att = eye(6);
+D_att = zeros(6,3);
+
+attitude = ss(A_att, B_att, C_att, D_att);
 

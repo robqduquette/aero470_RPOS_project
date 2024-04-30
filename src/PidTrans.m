@@ -38,6 +38,10 @@ GOL = GPLANT*GC; % state error -> state
 % closed loop tf
 GCL = GOL/(1+GOL);
 
+PIDcl = GCL;
+PIDol = GOL;
+PIDtf = GC;
+save('PID','PIDcl','PIDol','PIDtf')
 
 % H1 = transpose(H);
 % T = (H1*GC)/(1+(H1*GC))
@@ -74,9 +78,10 @@ close_plots = false;
 for in = 1:6
     for out = 1:6
         plotBode(in,out,GCL,fig_title(in,out),filename(in,out),p)
-        if close_plotsclose 
+        if close_plots
             close gcf
         end
+        poles{in,out} = pole(GCL(in,out))
     end
 end
 

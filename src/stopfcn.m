@@ -55,7 +55,7 @@ if(0)
 end
 
 %% orbit plane plot
-if(1)
+if(0)
     figure(2)
     plotTarget([-8,0,0],'sr');
     hold on
@@ -76,7 +76,7 @@ if(1)
 end
 
 %% error plot
-if(0)
+if(1)
     error = ref - output;
     % pos
     figure(3)
@@ -84,8 +84,9 @@ if(0)
     legend('ex','ey','ez')
     ylabel('error (m)')
     xlabel('time (s)')
-    title('Position Error')
+    title(join([names(LQR_ON+1),' Position Error',dist(disturbance_gain+1)],""))
     grid on
+    % print(join([filepath,"pos error"]," "),'-dpng')
 
     % vel
     figure(4)
@@ -93,8 +94,9 @@ if(0)
     legend('eu','ev','ew')
     ylabel('error (m/s)')
     xlabel('time (s)')
-    title('Velocity Error')
+    title(join([names(LQR_ON+1),' Velocity Error',dist(disturbance_gain+1)],""))
     grid on
+    % print(join([filepath,"vel error"]," "),'-dpng')
 
 end
 %% control action plot
@@ -104,8 +106,9 @@ if(1)
     legend('ux','uy','uz')
     ylabel('Control Effort (N)')
     xlabel('time (s)')
-    title('Control Effort')
+    title(join([names(LQR_ON+1),' Control Effort ',dist(disturbance_gain+1)],""))
     grid on
+    % print(join([filepath,"effort"]," "),'-dpng')
 end
 
 %% x plot

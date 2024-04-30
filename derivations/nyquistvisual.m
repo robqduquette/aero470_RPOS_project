@@ -1,23 +1,22 @@
 clear
 close all
 load sysoltf.mat
+load PID.mat
+load LQR.mat
 %% nyqist
 % choose transfer function
-in = 2;
-out= 2;
-radius = 1e-1; % set to 0 if no radius desired
+in = 1;
+out= 1;
+radius = 1e-2; % set to 0 if no radius desired
 boxneg1 = false;
 
-% experimenting with spring mass damper system 
-% smd.wn = 1;
-% smd.damp = 0.01;
-% smd.tf = tf([smd.wn^2],[1 2*smd.damp*smd.wn smd.wn^2])
 n = 0.00110851126424986; %2*pi/(60); % Hz
 m = 100; % kgla
 
-planttf = H_ex{in,out};
-controltf = tf([300 100 0],[1 0]);
-tf = planttf * controltf
+%planttf = H_ex{in,out};
+%controltf = tf(in,out);
+%tf = planttf * controltf
+tf = LQRcl(in,out);
 
 % get poles and zeros
 zeros = roots(tf.Numerator{1})
@@ -84,3 +83,6 @@ if radius
 else 
     legend('',['0 \rightarrow +\infty'])
 end
+
+filename = ["Nyquist Plot LQR/LQRnyquist",num2str(in),"_",num2str(out)];
+print(join(filename,""),'-dpng')

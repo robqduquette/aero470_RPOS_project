@@ -42,6 +42,9 @@ sys_cl  = ss(Ac, Bc, Cc, Dc);
 % Convert state-space model to transfer function
 GCL = tf(sys_cl);
 
+LQRcl = GCL;
+%PIDol = GOL;
+save('LQR','LQRcl')
 % Display the transfer function
 % disp('Transfer Function of the Closed-Loop System with LQR Controller:');
 % sys_tf

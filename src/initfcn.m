@@ -2,7 +2,13 @@ clear
 %close all
 
 LQR_ON = true;
-disturbance_gain = 1;
+disturbance_gain = 0;
+
+names = ["PID","LQR"];
+dist = [" no disturbances"," with disturbances"];
+control_name = join([names(LQR_ON + 1),dist(disturbance_gain+1)],"");
+
+filepath = join(["Plots/SimFigs/",control_name]);
 
 %% Initial Conditions
 % x - radial
